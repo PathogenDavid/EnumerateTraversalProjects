@@ -1,11 +1,17 @@
 <Project>
   <PropertyGroup>
+    <!-- Specify default configuration and platform -->
+    <Configuration Condition="'$(Configuration)' == ''">Debug</Configuration>
+    <Platform Condition="'$(Platform)' == '' and '$(MSBuildProjectExtension)' == '.csproj'">AnyCPU</Platform>
+    <Platform Condition="'$(Platform)' == '' and '$(MSBuildProjectExtension)' == '.vcxproj'">Win32</Platform>
+
     <!-- We use a common output directories to make it easier to purge everything. -->
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
     <RelativeProjectPath>$([MSBuild]::MakeRelative($(MSBuildThisFileDirectory), $(MSBuildProjectFullPath)))</RelativeProjectPath>
     <_OutputPathSuffix>$(RelativeProjectPath)\</_OutputPathSuffix>
     <OutputPath>$(MSBuildThisFileDirectory)bin\$(_OutputPathSuffix)$(Configuration)\</OutputPath>
+    <OutDir>$(OutputPath)</OutDir>
     <BaseIntermediateOutputPath>$(MSBuildThisFileDirectory)obj\$(_OutputPathSuffix)$(Configuration)\</BaseIntermediateOutputPath>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)$(Configuration)\</IntermediateOutputPath>
   </PropertyGroup>
