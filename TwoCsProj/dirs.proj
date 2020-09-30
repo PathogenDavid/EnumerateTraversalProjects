@@ -1,0 +1,6 @@
+<Project Sdk="Microsoft.Build.Traversal">
+  <ItemGroup>
+    <ProjectReference Include="Zapplication/Zapplication.csproj" />
+    <ProjectReference Include="Application/Application.csproj" />
+  </ItemGroup>
+</Project>

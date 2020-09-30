@@ -1,0 +1,2 @@
+NestedProjectReference/Application/Application.csproj
+NestedProjectReference/ClassLibrary/ClassLibrary.csproj

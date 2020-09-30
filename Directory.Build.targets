@@ -1,0 +1,37 @@
+<Project>
+
+  <PropertyGroup>
+    <_TraversedOutputFile>$(MSBuildProjectFullPath).Traversed.txt</_TraversedOutputFile>
+  </PropertyGroup>
+
+  <Target Name="CleanTraversedOutputFile" AfterTargets="Clean" Condition="Exists('$(_TraversedOutputFile)')">
+    <Delete Files="$(_TraversedOutputFile)" />
+  </Target>
+
+  <Target Name="ExtractProjectReferenceWithConfiguration" DependsOnTargets="PrepareProjectReferences" Returns="%(ProjectReferenceWithConfiguration.FullPath)" />
+
+  <!-- Should this depend on PrepareProjectReferences? I think all we actually need is _MSBuildProjectReferenceExistent -->
+  <Target Name="EnumerateTraversedProjects"
+    DependsOnTargets="AssignProjectConfiguration;ResolveProjectReferences"
+    AfterTargets="AfterResolveReferences"
+    Condition="'$(MSBuildProjectExtension)' == '.proj'"
+    >
+    <ItemGroup>
+      <_AllTraversedProjects Remove="@(_AllTraversedProjects)" />
+      <_DependenciesOfTravseredProjects Remove="@(_DependenciesOfTravseredProjects)" />
+    </ItemGroup>
+    <MSBuild Projects="@(ProjectReference)" Targets="ExtractProjectReferenceWithConfiguration" BuildInParallel="true">
+      <Output TaskParameter="TargetOutputs" ItemName="_DependenciesOfTravseredProjects" />
+    </MSBuild>
+    <ItemGroup>
+      <_AllTraversedProjects Include="@(ProjectReference)" />
+      <_AllTraversedProjects Include="@(_DependenciesOfTravseredProjects)" />
+      <_AllTraversedProjects Update="@(_AllTraversedProjects)" RelativePath="$([MSBuild]::MakeRelative($(MSBuildThisFileDirectory), %(FullPath)))" />
+    </ItemGroup>
+    <Message Importance="High" Text="All traversed projects for $(RelativeProjectPath):" />
+    <Message Importance="High" Text="    %(_AllTraversedProjects.RelativePath)" />
+    <Error Text="Traversed project listing file '$(_TraversedOutputFile)' already exists!" Condition="Exists('$(_TraversedOutputFile)')" />
+    <WriteLinesToFile File="$(_TraversedOutputFile)" Lines="%(_AllTraversedProjects.RelativePath)" />
+  </Target>
+
+</Project>

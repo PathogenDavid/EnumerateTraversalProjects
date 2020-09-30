@@ -1,0 +1,2 @@
+ReferenceOutputAssemblyFalse/Application/Application.csproj
+ReferenceOutputAssemblyFalse/ClassLibrary/ClassLibrary.csproj

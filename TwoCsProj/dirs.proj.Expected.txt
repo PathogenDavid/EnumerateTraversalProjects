@@ -1,0 +1,2 @@
+TwoCsProj/Application/Application.csproj
+TwoCsProj/Zapplication/Zapplication.csproj

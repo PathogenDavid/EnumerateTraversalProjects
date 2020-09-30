@@ -1,0 +1,6 @@
+<Project Sdk="Microsoft.Build.Traversal">
+  <ItemGroup>
+    <ProjectReference Include="Application/Application.csproj" />
+    <ProjectReference Include="Nested/nested.dirs.proj" />
+  </ItemGroup>
+</Project>

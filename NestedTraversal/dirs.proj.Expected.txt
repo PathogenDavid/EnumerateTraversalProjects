@@ -1,0 +1,3 @@
+NestedTraversal/Application/Application.csproj
+NestedTraversal/Nested/nested.dirs.proj
+NestedTraversal/Nested/NestedApplication/NestedApplication.csproj

@@ -1,0 +1,12 @@
+<Project>
+  <PropertyGroup>
+    <!-- We use a common output directories to make it easier to purge everything. -->
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+    <RelativeProjectPath>$([MSBuild]::MakeRelative($(MSBuildThisFileDirectory), $(MSBuildProjectFullPath)))</RelativeProjectPath>
+    <_OutputPathSuffix>$(RelativeProjectPath)\</_OutputPathSuffix>
+    <OutputPath>$(MSBuildThisFileDirectory)bin\$(_OutputPathSuffix)$(Configuration)\</OutputPath>
+    <BaseIntermediateOutputPath>$(MSBuildThisFileDirectory)obj\$(_OutputPathSuffix)$(Configuration)\</BaseIntermediateOutputPath>
+    <IntermediateOutputPath>$(BaseIntermediateOutputPath)$(Configuration)\</IntermediateOutputPath>
+  </PropertyGroup>
+</Project>
