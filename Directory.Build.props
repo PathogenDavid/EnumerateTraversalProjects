@@ -14,5 +14,8 @@
     <OutDir>$(OutputPath)</OutDir>
     <BaseIntermediateOutputPath>$(MSBuildThisFileDirectory)obj\$(_OutputPathSuffix)$(Configuration)\</BaseIntermediateOutputPath>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)$(Configuration)\</IntermediateOutputPath>
+
+    <!-- Misc Properties -->
+    <DisableOnDotNetCli>$(MSBuildThisFileDirectory)DisableOnDotNetCli.targets</DisableOnDotNetCli>
   </PropertyGroup>
 </Project>

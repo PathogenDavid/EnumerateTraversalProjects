@@ -1,0 +1,11 @@
+<Project>
+  <!--
+    DOTNET_HOST_PATH seems to be the best way to detect the dotnet CLI
+    There's not really a whole lot else differen that shows up when it's used:
+    https://github.com/dotnet/sdk/blob/e2faebad758a7d38b5965cda755a17e9e9881599/src/Cli/Microsoft.DotNet.Cli.Utils/MSBuildForwardingAppWithoutLogging.cs#L29
+  -->
+  <ItemGroup Condition="'$(DOTNET_HOST_PATH)' != ''">
+    <ProjectReference Remove="@(ProjectReference)" />
+    <TestDisabledReason Include="dotnet CLI not supported for this test" />
+  </ItemGroup>
+</Project>

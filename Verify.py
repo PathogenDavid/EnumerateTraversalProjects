@@ -46,6 +46,15 @@ for project_file in all_project_files:
             for line in f:
                 results.append(line.strip().replace('\\', '/'))
 
+        disabled_test_prefix = 'TEST_DISABLED: '
+        if len(results) > 0 and results[0].startswith(disabled_test_prefix):
+          write_info_line(project_file, "SKP", results[0][len(disabled_test_prefix):])
+          for reason in results[1:]:
+            if reason.startswith(disabled_test_prefix):
+              reason = reason[len(disabled_test_prefix):]
+            print(f"       {' ' * longest_project_file}{reason}")
+          continue
+
         expecteds = []
         with io.open(expecteds_file_path, mode='r') as f:
             for line in f:

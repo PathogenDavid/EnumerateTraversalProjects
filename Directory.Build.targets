@@ -14,7 +14,7 @@
   <Target Name="EnumerateTraversedProjects"
     DependsOnTargets="AssignProjectConfiguration;ResolveProjectReferences"
     AfterTargets="AfterResolveReferences"
-    Condition="'$(MSBuildProjectExtension)' == '.proj'"
+    Condition="'$(MSBuildProjectExtension)' == '.proj' and '@(TestDisabledReason)' == ''"
     >
     <ItemGroup>
       <_AllTraversedProjects Remove="@(_AllTraversedProjects)" />
@@ -32,6 +32,16 @@
     <Message Importance="High" Text="    %(_AllTraversedProjects.RelativePath)" />
     <Error Text="Traversed project listing file '$(_TraversedOutputFile)' already exists!" Condition="Exists('$(_TraversedOutputFile)')" />
     <WriteLinesToFile File="$(_TraversedOutputFile)" Lines="%(_AllTraversedProjects.RelativePath)" />
+  </Target>
+
+  <Target Name="MarkTestAsDisabled"
+    DependsOnTargets="AssignProjectConfiguration;ResolveProjectReferences"
+    AfterTargets="AfterResolveReferences"
+    Condition="'$(MSBuildProjectExtension)' == '.proj' and '@(TestDisabledReason)' != ''"
+    >
+    <Message Importance="High" Text="$(RelativeProjectPath) is disabled:" />
+    <Message Importance="High" Text="    %(TestDisabledReason.Identity)" />
+    <WriteLinesToFile File="$(_TraversedOutputFile)" Lines="TEST_DISABLED: %(TestDisabledReason.Identity)" />
   </Target>
 
 </Project>
